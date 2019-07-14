@@ -20,7 +20,7 @@ class Promise {
         this.onRejectedCallback = [];
         let resolve = (data) => {
             if (this.state === 'pending') {
-                this.state = 'resolved';
+                this.state = 'fulfilled';
                 this.data = data;
                 this.onResolvedCallback.forEach((fn) => {
                     fn()
@@ -44,7 +44,7 @@ class Promise {
     }
 
     then(onFufilled, onRejected) {
-        if (this.state === 'resolved') {
+        if (this.state === 'fulfilled') {
             onFufilled(this.data)
         }
         if (this.state === 'rejected') {

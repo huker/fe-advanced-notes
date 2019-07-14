@@ -9,6 +9,12 @@
 
 代码：1.js深入内容 -> callback -> 1.1.aop.js
 
+react中也有类似的思想 - 事务
+
+在一个逻辑之前和之后执行wrapper 可以执行多个wrapper
+
+代码：1.js深入内容 -> callback -> 1.7.react事务.js
+
 例子2：类型判断方法的封装
 
 代码：1.js深入内容 -> callback -> 1.2.isType.js
@@ -16,6 +22,9 @@
 例子3: after 在调用多少次之后执行
 
 代码：1.js深入内容 -> callback -> 1.3.after.js && 1.4.asyncdata.js(after的应用)
+
+涉及到的别的内容：
+- 函数柯里化 1.8.柯里化和反柯里化.js
 
 #### 2.发布订阅、观察者模式
 
@@ -29,11 +38,12 @@
 
 #### 3.promise
 
-1.基础实现
-- 3状态：pending resolved rejected
+1.基础概念
+- 3状态：pending fulfilled rejected
 - new Promise的参数是个executor执行器（会直接执行的）
 - 状态是不可更改的 走了resolve就不会再走reject
 - 错误都会走reject 比如throw Error
+- promiseA+规范
 
 代码：1.js深入内容 -> promise -> 1
 
@@ -45,3 +55,16 @@
 3.链式调用
 
 代码：1.js深入内容 -> promise -> 3
+
+4.延迟对象 减少套用
+
+5.finally
+
+6.promise all/race
+
+7.如何终止中断一个promise
+比如promise执行3秒 想在2s的时候就reject掉 可以借助race 第一个失败了就都失败了
+
+8.generator 生成器
+
+9.async await

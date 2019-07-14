@@ -14,7 +14,7 @@ class Promise {
         let resolve = (data) => {
             //只有pending下才会改变状态 有状态的情况就不会变化了
             if (this.state === 'pending') {
-                this.state = 'resolved';
+                this.state = 'fulfilled';
                 this.data = data;
             }
         };
@@ -33,7 +33,7 @@ class Promise {
     }
 
     then(onFufilled, onRejected) {
-        if (this.state === 'resolved') {
+        if (this.state === 'fulfilled') {
             onFufilled(this.data)
         }
         if (this.state === 'rejected') {
