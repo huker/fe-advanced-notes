@@ -28,15 +28,19 @@ function readFile(url) {
     })
 }
 
-readFile('./name.txt').then((data) => {
-    // console.log("1", data)
-    // return readFile(data)
-    return 100
-}, (err) => {
-    throw new Error("???")
-}).then((res) => {
-    console.log("then", res)
-}).then()
-    .catch((err) => {
-        console.log("catch", err)
+readFile('./name.txt')
+    .then((data) => {
+        // console.log("1", data)
+        // return data
+        return new Promise((resolve, reject) => {
+            resolve(new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(100)
+                }, 1000)
+            }))
+        })
+    })
+    .then()
+    .then((res) => {
+        console.log("then", res)
     })
