@@ -80,3 +80,13 @@ react中也有类似的思想 - 事务
 8.generator 生成器
 
 9.async await
+
+#### 4.es6
+**let/const**
+
+var的缺点：
+
+- var声明的变量 声明到全局 全局变量
+- var变量提升 能在声明之前调用
+- let const可以用{}的方式连用 块作用域
+- var能重复声明 在同一作用域下

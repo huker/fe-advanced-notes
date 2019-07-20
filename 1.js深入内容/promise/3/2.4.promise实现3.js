@@ -28,7 +28,7 @@ let resolvePromise = (promise2, x, resolve, reject) => {
                     // 所以递归一下
                     if (called) return;
                     called = true;
-                    resolvePromise(then, y, resolve, reject)
+                    resolvePromise(promise2, y, resolve, reject)
                 }, (r) => {
                     if (called) return;
                     called = true;
@@ -83,7 +83,12 @@ class Promise {
 
     //返回新的promise
     then(onFufilled, onRejected) {
-        let promise2 = new Promise((resolve, reject) => {
+        onFufilled = (typeof onFufilled === 'function') ? onFufilled : val => val;
+        onRejected = (typeof onRejected === 'function') ? onRejected : err => {
+            throw err
+        };
+        let promise2;
+        promise2 = new Promise((resolve, reject) => {
             /**
              * 值的穿透 是个函数的话用定义的 不是则穿透
              * .then() 穿透后即
@@ -91,10 +96,6 @@ class Promise {
              *     return data
              * })
              */
-            onFufilled = (typeof onFufilled === 'function') ? onFufilled : val => val;
-            onRejected = (typeof onRejected === 'function') ? onRejected : err => {
-                throw err
-            };
             //传进来的executor执行器会直接执行 所以下面的代码搬进来就好
             if (this.state === 'resolved') {
                 //加定时器是为了能拿到promise2 本来是不一定能拿到的（外面是异步才会拿到 同步就拿不到了）
@@ -118,29 +119,34 @@ class Promise {
                 })
             }
             if (this.state === 'pending') {
-                if (onFufilled) {
-                    this.onResolvedCallback.push(() => {
+                this.onResolvedCallback.push(() => {
+                    setTimeout(() => {
                         try {
                             let x = onFufilled(this.data);
                             resolvePromise(promise2, x, resolve, reject);
                         } catch (err) {
                             reject(err)
                         }
-                    });
-                }
-                if (onRejected) {
-                    this.onRejectedCallback.push(() => {
+                    })
+                });
+                this.onRejectedCallback.push(() => {
+                    setTimeout(() => {
                         try {
                             let x = onRejected(this.err);
                             resolvePromise(promise2, x, resolve, reject);
                         } catch (err) {
                             reject(err)
                         }
-                    });
-                }
+                    })
+                });
+
             }
         })
         return promise2
+    }
+
+    catch(errCallback) {
+        return this.then(null, errCallback)
     }
 }
 Promise.defer = Promise.deferred = function () {
