@@ -75,6 +75,8 @@ react中也有类似的思想 - 事务
 6.promise all/race
 
 7.如何终止中断一个promise
+- 链式调用里 返回一个pending的promise 可以中断链式
+
 比如promise执行3秒 想在2s的时候就reject掉 可以借助race 第一个失败了就都失败了
 
 8.generator 生成器
