@@ -18,7 +18,7 @@
  */
 
 
-function deep(value) {
+function deep(value, hash = new WeakMap()) {
     if (value == null) {
         return value
     }
@@ -32,6 +32,11 @@ function deep(value) {
 
     let newObj = new value.constructor();     //[] {}
 
+    //到这边说明拷贝的是个对象 那就把要拷贝的值存起来 走到能从hash里取出来就不要拷贝了 直接取
+    if (hash.get(value)) {
+        return hash.get(value)
+    }
+    hash.set(value, newObj)
     for ( let i in value ) {
         if (!newObj.hasOwnProperty(i)) {
             newObj[i] = deep(value[i])
