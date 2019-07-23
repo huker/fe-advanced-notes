@@ -4,11 +4,11 @@
 
 
 function myNew(...args) {
-    let constructor = args[0];
-    let obj = Object.create(constructor.prototype);
-    let res = constructor.call(obj, ...args.slice(1));
-    if ((typeof res === 'object' || typeof res === 'function') && res != null) {
-        return res;
+    let source = args[0];
+    let obj = Object.create(source.prototype);
+    let content = source.call(obj, ...args.slice(1));
+    if (typeof content === 'object' || typeof content === 'function') {
+        return content;
     } else {
         return obj;
     }
@@ -17,9 +17,15 @@ function Person(name, age) {
     this.name = name;
     this.age = age;
 }
+function test2() {
+    return function () {
+        console.log("test")
+    }
+}
 Person.prototype.getName = function () {
     return this.name
 };
 let b = myNew(Person, 'huk', 24);
-console.log(b);
-console.log(b.getName());
+console.log(b, b.getName());
+let c = myNew(test2);
+console.log(c);

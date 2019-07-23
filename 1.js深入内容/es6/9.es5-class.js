@@ -50,3 +50,13 @@ console.log(Array.prototype.__proto__ === Object.prototype); //true
  */
 console.log(Animal.prototype.constructor === Animal) //true
 console.log(ani1.constructor === Animal) //true 获取的是类 不能拿到实例的属性 比如type
+
+
+let a = {
+    name: 123
+}
+let b = Object.create(a);
+console.log(b.name)
+
+b.name++;
+console.log(b.name, a.name)

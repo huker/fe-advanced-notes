@@ -27,6 +27,29 @@ Tiger.prototype.shut = function () {
  */
 // Tiger.prototype.__proto__ = Animal.prototype;
 Object.setPrototypeOf(Tiger.prototype, Animal.prototype);
-
+//
 let tiger = new Tiger();
 console.log(tiger.type, tiger.eat())
+
+/**
+ * 还可以用Object.create()方式 来实现继承
+ * 它的原理和上面不一样 不用原来tiger的prototype 新建了一个函数来指向Animal的prototype
+ * 并让Tiger的prototype指向它
+ */
+
+function myCreate(ParentPrototype) {
+    let Fn = function () {
+
+    };
+    Fn.prototype = ParentPrototype; //把父类的原型 放到Fn上
+    //返回的是一个实例
+    return new Fn();
+}
+
+// Tiger.prototype = Object.create(Animal.prototype, { constructor: { value: Tiger } });
+//让Tiger的原型指向Fn函数的示例
+//但是这样做的话 constructor就会变成了Animal 所以在Object.create中可以把constructor定义
+Tiger.prototype = myCreate(Animal.prototype);
+let tiger = new Tiger();
+console.log(tiger.type)
+
