@@ -21,4 +21,6 @@ fn.finally(() => {
     console.log("finally")
 }).then((res) => {
     console.log(res)
+}, (err) => {
+    console.log(err)
 });

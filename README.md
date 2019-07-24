@@ -68,20 +68,17 @@ react中也有类似的思想 - 事务
 
 代码：1.js深入内容 -> promise -> 3
 
-4.延迟对象 减少套用
+**4.promise相关**
 
-5.finally
+4.1 如何终止中断一个promise
 
-6.promise all/race
-
-7.如何终止中断一个promise
 - 链式调用里 返回一个pending的promise 可以中断链式
 
-比如promise执行3秒 想在2s的时候就reject掉 可以借助race 第一个失败了就都失败了
+- 比如promise执行3秒 想在2s的时候就reject掉 可以借助race 第一个失败了就都失败了
 
-8.generator 生成器
+4.2 Promise.resolve(fn())会等待fn执行完再得到结果，无论是异步还是同步，所以在finally或try中都可以通过这做到获取到结果再then/catch
 
-9.async await
+代码: 1.js深入内容 -> promise -> finnaly实现.js
 
 #### 4.es6
 **let/const**
@@ -92,3 +89,48 @@ var的缺点：
 - var变量提升 能在声明之前调用
 - let const可以用{}的方式连用 块作用域
 - var能重复声明 在同一作用域下
+
+**Symbol**
+
+- 独一无二
+
+- 参数是 描述（描述这个symbol） 【可选参数】
+
+- 如果对象属性是symbol声明的 他是不可枚举的 for的时候不会出来 Object.keys也是，可以通过Object.getOwnPropertySymbols(obj)取
+
+- Symbol.for() 不会重新声明
+
+  ```javascript
+  let v1 = Symbol.for('12');
+  let v2 = Symbol.for('12');
+  console.log(v1 === v2); //true
+  ```
+
+- Symbol.interator 元编程 改变一些默认系统级的方法
+
+**Spread**
+
+- 解构赋值
+
+- …是对象的展开，只能在结尾用 收敛功能 把最后的几项都捋在一起
+
+  ```javascript
+  let [x1, ...x2] = [1, 2, 3, 4];
+  ```
+
+- 类数组 转化为 数组
+
+  两种方法的区别是Symbol.interator，{xxx}中打出来其实有这个属性，有它才能用…，也可以在对象上自己添加这个属性来实现功能  代码：1.js深入内容 -> es6 -> 3.spread.js
+
+  ```javascript
+  //方法一
+  function func() {
+      console.log(Array.from(arguments))
+  }
+  //方法二
+  function func(...args) {
+      console.log([...args])
+  }
+  ```
+
+  
