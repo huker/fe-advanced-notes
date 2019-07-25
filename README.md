@@ -2,6 +2,7 @@
 > keep moving！此处为目录，具体内容看代码 + 注释。
 
 - step1 JS深入
+- step2 NodeJS
 
 ### step1 JS深入
 #### 1.高阶函数
@@ -132,5 +133,14 @@ var的缺点：
       console.log([...args])
   }
   ```
+
+### step2 NodeJS
+#### 1.commonjs原理
+- 主要是：同步的方式读取文件
+- 自执行函数
+- 不同文件类型处理
+- 缓存
+
+代码：2.node -> 1.commonjs原理和实现
 
   
