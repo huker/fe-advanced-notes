@@ -57,6 +57,11 @@ class Promise {
         this.onResolvedCallback = [];
         this.onRejectedCallback = [];
         let resolve = (data) => {
+            //在这边处理 如果resolve的是一个promise
+            if (data instanceof Promise) {
+                console.log(data)
+                return data.then(resolve, reject)
+            }
             if (this.state === 'pending') {
                 this.state = 'resolved';
                 this.data = data;
@@ -145,6 +150,7 @@ class Promise {
         return promise2
     }
 
+    //catch方法 then的语法糖
     catch(errCallback) {
         return this.then(null, errCallback)
     }
