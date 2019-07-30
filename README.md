@@ -17,6 +17,10 @@
 
    记录文档：1.js深入内容 -> es6 -> 总结.md
 
+4. **eventLoop（浏览器、Node事件环）**
+
+   记录文档：1.js深入内容 -> eventLoop -> 总结.md
+
 ### step2 NodeJS
 
 1. commonjs原理和实现
