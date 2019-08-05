@@ -27,4 +27,12 @@
 
    记录文档：2.node -> 1.commonjs原理和实现 -> 总结.md
 
+2. buffer
+
+   记录文档：2.node -> 2.buffer -> 总结.md
+
+4. stream
+
+   记录文档：2.node -> 2.stream -> 总结.md
+
   
