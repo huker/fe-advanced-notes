@@ -14,6 +14,9 @@ class ReadStream extends Events {
 
         //默认是非流动模式
         this.flowing = null;
+
+        this.position = this.start;
+
         //新建先打开文件
         this.open();
 
@@ -32,7 +35,23 @@ class ReadStream extends Events {
             //不能用on 会多次触发open
             return this.once('open', () => this.read())
         }
-        // fs.read(this.fd)
+        // let buffer = Buffer.alloc(this.highWaterMark);
+        let _highWaterMark = this.end ? (Math.min(this.end - this.start - this.position + 1, this.highWaterMark)) : this.highWaterMark;
+        let buffer = Buffer.alloc(_highWaterMark);
+        fs.read(this.fd, buffer, 0, _highWaterMark, this.position, (err, bytesRead) => {
+            if (bytesRead > 0) {
+                this.position += bytesRead;
+                this.emit('data', buffer);
+                this.read();
+            } else {
+                this.emit('end', buffer);
+                if (this.autoClose) {
+                    fs.close(this.fd, () => {
+                        this.emit('close');
+                    })
+                }
+            }
+        })
     }
 
     open() {
