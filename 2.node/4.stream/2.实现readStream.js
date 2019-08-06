@@ -29,6 +29,19 @@ class ReadStream extends Events {
         })
     }
 
+    //非流动下才有恢复流动之说
+    resume() {
+        if (!this.flowing) {
+            this.flowing = true;
+            this.read();
+        }
+    }
+
+    //暂停
+    pause() {
+        this.flowing = false;
+    }
+
     read() {
         //发布订阅模式 fd没有的时候先触发open事件 回调执行read
         if (typeof this.fd !== 'number') {
@@ -40,9 +53,12 @@ class ReadStream extends Events {
         let buffer = Buffer.alloc(_highWaterMark);
         fs.read(this.fd, buffer, 0, _highWaterMark, this.position, (err, bytesRead) => {
             if (bytesRead > 0) {
-                this.position += bytesRead;
-                this.emit('data', buffer);
-                this.read();
+                if (this.flowing) {
+                    this.position += bytesRead;
+                    //buffer.toString 转编码
+                    this.emit('data', this.encoding ? buffer.toString(this.encoding) : buffer);
+                    this.read();
+                }
             } else {
                 this.emit('end', buffer);
                 if (this.autoClose) {

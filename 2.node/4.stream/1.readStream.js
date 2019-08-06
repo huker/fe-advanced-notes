@@ -46,6 +46,7 @@ rs.on('data', function (data) {
     console.log(data);
     //这边不用+=data这种拼接是因为汉字是三个字节 highWaterMark有可能会把汉字的字节拆开来读 拼起来就不对了
     arr.push(data);
+    rs.pause();
 });
 
 //传输结束的监听
