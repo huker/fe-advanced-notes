@@ -20,9 +20,12 @@
  */
 
 function a() {
+    let x = 1;
     function b() {
+        console.log(x)
         function c() {
             console.log('>>')
+            debugger
         }
 
         c()
