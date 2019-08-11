@@ -23,16 +23,20 @@
 
 ### step2 NodeJS
 
-1. commonjs原理和实现
+1. **commonjs原理和实现**
 
    记录文档：2.node -> 1.commonjs原理和实现 -> 总结.md
 
-2. buffer
+2. **buffer**
 
    记录文档：2.node -> 2.buffer -> 总结.md
 
-4. stream
+4. **stream**
 
    记录文档：2.node -> 2.stream -> 总结.md
+
+6. **koa**
+
+   记录文档：2.node -> 6.koa -> 总结.md
 
   
