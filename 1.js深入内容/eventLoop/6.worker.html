@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    //不会阻塞我们的主线程 先打出ok再输出计算的值
+    //webworker是开启了一个新的线程 是一个工作线程（只能用来计算的 不能做别的）
+
+    let worker = new Worker('./6.worker.js');
+    worker.onmessage = function (e) {
+        console.log(e.data)
+    }
+
+    console.log("okok")
+</script>
+</body>
+</html>
