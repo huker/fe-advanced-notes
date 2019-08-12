@@ -9,6 +9,7 @@ let response = {
         return this._body
     },
     set body(v) {
+        this.res.statusCode = 200;
         this._body = v;
     }
 };

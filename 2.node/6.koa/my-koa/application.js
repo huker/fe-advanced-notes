@@ -6,10 +6,12 @@ const http = require('http');
 const context = require('./context');
 const request = require('./request');
 const response = require('./response');
+const EventEmitter = require('events');
 
-class Koa {
+class Koa extends EventEmitter {
 
     constructor() {
+        super();
         //需要Object.create 不影响内部
         this.context = Object.create(context);
         this.request = Object.create(request);
@@ -38,13 +40,11 @@ class Koa {
         let dispatch = (index) => {
             if (index <= nextFlag) return Promise.reject('multiple call next()');
             nextFlag = index;
-            //或者if (index === this.middlewares.length) return Promise.resolve()
-            if (index !== this.middlewares.length) {
-                let middleware = this.middlewares[index];
-                //中间件可能不是一个promise 如果我们没有await的话
-                //但是我们要强行包成一个promise
-                return Promise.resolve(middleware(ctx, () => dispatch(index + 1)))
-            }
+            if (index === this.middlewares.length) return Promise.resolve();
+            let middleware = this.middlewares[index];
+            //中间件可能不是一个promise 如果我们没有await的话
+            //但是我们要强行包成一个promise
+            return Promise.resolve(middleware(ctx, () => dispatch(index + 1)))
         };
 
         return dispatch(index);
@@ -53,12 +53,17 @@ class Koa {
     //处理请求
     handleRequest(req, res) {
         let ctx = this.createContext(req, res);
+        //先给状态码设置404 在ctx.body的时候再设成200
+        res.statusCode = 404;
         // 需要把存好的middlewares组合起来
         // 组成一个大的promise 成功后end
         this.compose(ctx).then(() => {
             if (ctx.body) {
-                res.end(ctx.body)
+                return res.end(ctx.body)
             }
+            res.end('Not Found');
+        }).catch((err) => {
+            this.emit('error', err);
         })
     }
 
