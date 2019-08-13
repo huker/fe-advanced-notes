@@ -7,6 +7,7 @@ const context = require('./context');
 const request = require('./request');
 const response = require('./response');
 const EventEmitter = require('events');
+const Stream = require('stream');
 
 class Koa extends EventEmitter {
 
@@ -59,7 +60,22 @@ class Koa extends EventEmitter {
         // 组成一个大的promise 成功后end
         this.compose(ctx).then(() => {
             if (ctx.body) {
-                return res.end(ctx.body)
+                //类型的兼容
+                let _body = ctx.body;
+                if (typeof _body === 'string' || Buffer.isBuffer(_body)) {
+                    return res.end(_body)
+                } else if (typeof _body === 'number') {
+                    return res.end(_body + '')
+                } else if (_body instanceof Stream) {
+                    //文件流 默认直接下载这个文件
+                    //头不能是中文的 用encodeURIComponent编码一下
+                    res.setHeader('Content-Disposition', 'attachment;filename=' + encodeURIComponent('下载'));
+                    res.setHeader('Content-Type', 'application/octet-stream');
+                    _body.pipe(res);
+                    return
+                } else if (typeof _body === 'object') {
+                    return res.end(JSON.stringify(_body))
+                }
             }
             res.end('Not Found');
         }).catch((err) => {
