@@ -1,3 +1,7 @@
+
+//一层路由的基础实现
+
+
 //路由中的每一个层 这样方便扩展
 class Layer {
     constructor(pathname, callback, method) {
