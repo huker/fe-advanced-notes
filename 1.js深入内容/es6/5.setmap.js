@@ -68,7 +68,7 @@ console.log(map2)
 
 /**
  * weakMap 弱引用
- * key只能是对象
+ * key只能是对象!
  * 这边就会被回收 浏览器快照里是找不到fnx的 已经销毁了
  */
 class fnx {
