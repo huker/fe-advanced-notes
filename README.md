@@ -4,13 +4,14 @@
 - step1 JS深入
 - step2 NodeJS
 - step3 Webpack
+- step4 React
 
 ### step1 JS深入
 1. **高阶函数相关**
 
    记录文档：1.js深入内容 -> callback -> 总结.md
 
-2. **promise**
+2. **promise用法、手写**
 
    记录文档：1.js深入内容 -> promise -> 总结.md
 
@@ -54,4 +55,7 @@ http://huker.github.io/2019/03/01/webpack4-guide/
 
 ### step4 React
 
-个人偏爱react，对vue实在提不起劲儿去学，先react搞透彻再说~
+个人很喜欢react，原理和最佳实践记录。vue和ng暂不加入进阶计划（vue没用过，ng用但是实在不想再写了哈哈）
+1. **redux**
+
+  记录文档：4.react -> redux -> 总结.md
