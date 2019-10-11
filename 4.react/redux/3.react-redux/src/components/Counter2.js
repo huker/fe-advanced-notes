@@ -1,48 +1,40 @@
 import React, { Component } from 'react';
-import store from '../store';
-import * as types from '../store/types';
-import { bindActionCreators } from 'redux';
+import actions from '../store/actions/counter2';
+import { connect } from 'react-redux';
 
-function increment(payload) {
-    return { type: types.INCREMENT2, payload }
-}
-
-function decrement(payload) {
-    return { type: types.DECREMENT2, payload }
-}
-
-let actions = { increment, decrement };
-actions = bindActionCreators(actions, store.dispatch);
-
-export default class Counter2 extends Component {
+class Counter2 extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            count: store.getState().counter2.count
-        };
-    }
-
-    componentDidMount() {
-        this.unsubscribe = store.subscribe(() => {
-            this.setState({
-                count: store.getState().counter2.count
-            })
-        })
-    }
-
-    componentWillUnmount() {
-        this.unsubscribe();
     }
 
     render() {
         return (
             <div>
-                {this.state.count}
-                <button onClick={() => actions.increment(3)}>+</button>
-                <button onClick={() => actions.decrement(2)}>-</button>
+                {this.props.count}
+                <button onClick={() => this.props.increment(2)}>+</button>
+                <button onClick={() => this.props.decrement(1)}>-</button>
             </div>
         )
     }
 }
+
+let mapStateToProps = (state) => {
+    return state.counter2
+};
+
+let mapDispatchToProps = (dispatch) => ({
+    increment(payload){
+        dispatch({ type: 'INCREMENT2', payload })
+    },
+    decrement(payload){
+        dispatch({ type: 'DECREMENT2', payload })
+    }
+});
+
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Counter2)
 
