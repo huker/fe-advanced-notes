@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import actions from '../store/actions/counter2';
-import { connect } from 'react-redux';
+import { connect } from '../react-redux';
 
 class Counter2 extends Component {
 
@@ -9,6 +9,7 @@ class Counter2 extends Component {
     }
 
     render() {
+        console.log('couter2 render')
         return (
             <div>
                 {this.props.count}
