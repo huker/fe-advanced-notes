@@ -1,12 +1,13 @@
-## 前端进阶记录
+## 前端记录（学习成长/经验总结
 > keep moving！此处为目录，具体内容看对应文件夹中的总结.md和代码 + 注释。
 
-- step1 JS深入
-- step2 NodeJS
-- step3 Webpack
-- step4 React
+- 1 JS深入
+- 2 NodeJS
+- 3 Webpack
+- 4 React
+- 5 影像相关（cornerstone）
 
-### step1 JS深入
+### 1 JS深入
 1. **高阶函数相关**
 
    记录文档：1.js深入内容 -> callback -> 总结.md
@@ -23,7 +24,7 @@
 
    记录文档：1.js深入内容 -> eventLoop -> 总结.md
 
-### step2 NodeJS
+### 2 NodeJS
 
 1. **commonjs原理和实现**
 
@@ -41,7 +42,7 @@
 
    记录文档：2.node -> 6.koa -> 总结.md
 
- ### step3 Webpack
+ ### 3 Webpack
 
 关于webpack之前开过repository：
 
@@ -51,11 +52,25 @@ https://github.com/huker/webpack-demo
 
 http://huker.github.io/2019/03/01/webpack4-guide/
 
-会持续整理优化文章，强化webpack原理方面的内容将更新在webpack-demo项目，新增写一篇优化实战。
+### 4 React
 
-### step4 React
-
-个人很喜欢react，原理和最佳实践记录。vue和ng暂不加入进阶计划（vue没用过，ng用但是实在不想再写了哈哈）
+个人最喜欢react
 1. **redux**
 
   记录文档：4.react -> redux -> 总结.md
+  
+### 5 影像 cornerstone
+工作原因这两年间歇性在做影像相关的内容，把一些点做了一下记录
+
+1.conerstone-tools synchronize
+https://www.jianshu.com/p/944b1daee8cb
+
+2.loadAndCacheImage改造 - 预加载影像
+https://www.jianshu.com/p/c6c82a2e8638
+
+3.cornerstone-tools 空间定位功能
+https://www.jianshu.com/p/7da543becc2f
+
+4.metadataProvider问题
+https://www.jianshu.com/p/343213b8bfc4
+
