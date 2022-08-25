@@ -1,11 +1,13 @@
-## 前端记录（学习成长/经验总结
-> keep moving！此处为目录，具体内容看对应文件夹中的总结.md和代码 + 注释。
+## 前端成长记录 / 经验总结
+> keep moving！具体内容看对应文件夹中的总结
 
 - 1 JS深入
 - 2 NodeJS
 - 3 Webpack
 - 4 React
 - 5 影像相关（cornerstone）
+- 6 Vue
+- 7 算法（js向
 
 ### 1 JS深入
 1. **高阶函数相关**
@@ -51,13 +53,6 @@ https://github.com/huker/webpack-demo
 之前写的webpack4总结指南：
 
 http://huker.github.io/2019/03/01/webpack4-guide/
-
-### 4 React
-
-个人最喜欢react
-1. **redux**
-
-  记录文档：4.react -> redux -> 总结.md
   
 ### 5 影像 cornerstone
 工作原因这两年间歇性在做影像相关的内容，把一些点做了一下记录
