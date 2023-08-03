@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="some-element-you-want-to-animate">11</div>
+<script>
+    const element = document.getElementById("some-element-you-want-to-animate");
+    let start, previousTimeStamp;
+    let done = false;
+
+    function step(timestamp) {
+        if (start === undefined) {
+            start = timestamp;
+        }
+        const elapsed = timestamp - start;
+
+        if (previousTimeStamp !== timestamp) {
+            // 这里使用 Math.min() 确保元素在恰好位于 200px 时停止运动
+            const count = Math.min(0.1 * elapsed, 200);
+            element.style.transform = `translateX(${count}px)`;
+            if (count === 200) done = true;
+        }
+
+        if (elapsed < 2000) {
+            // 2 秒之后停止动画
+            previousTimeStamp = timestamp;
+            if (!done) {
+                window.requestAnimationFrame(step);
+            }
+        }
+    }
+
+    window.requestAnimationFrame(step);
+</script>
+</body>
+</html>

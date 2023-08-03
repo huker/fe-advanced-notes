@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="some-element-you-want-to-animate">11</div>
+<script>
+    function sleep(ms) {
+        let start = new Date().getTime();
+        while (new Date().getTime() < (start + ms)) {
+            // do nothing
+        }
+    }
+
+    let taskPool = [
+        () => {
+            console.log('task1 start');
+            sleep(20);
+            console.log('task1 end');
+        },
+        () => {
+            console.log('task2 start');
+            sleep(20);
+            console.log('task2 end');
+        },
+        () => {
+            console.log('task3 start');
+            sleep(20);
+            console.log('task3 end');
+        }
+    ];
+
+    //  requestIdleCallback的返回是个id Window.cancelIdleCallback()可以取消某个片段的执行
+    function init() {
+        requestIdleCallback((deadline) => {
+            const time = deadline.timeRemaining()
+            console.log('剩余时间：' + time + 'ms');
+            if (time > 1) {
+                const task = taskPool.shift();
+                task();
+                if (taskPool.length > 0) {
+                    init();
+                }
+            }
+        });
+    }
+
+    init();
+</script>
+</body>
+</html>
