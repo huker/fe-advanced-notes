@@ -46,6 +46,8 @@ nginx性能特别高，1核1G的最便宜的服务器，做静态资源时，抗
 
 nginx采用的是多进程（单线程，每个进程有一个线程）和多路IO复用模型
 
+进程是分配资源最小单位，一个进程可能有一个或多个线程，相当于一个厂房，线程是厂房里的工人
+
 3.2.1 工作流程
 ![工作流程](./img/nginx1.png)
 
@@ -116,4 +118,77 @@ nginx的工作原理和node几乎一样
 
 3.2.4 sendfile 零拷贝传输模式
 
-上面提到操作、读取文件是分两个步骤的，用户空间和内核空间。
+上面提到操作、读取文件是分两个步骤的，用户空间和内核空间。静态文件的请求直接从内核进入直接读出来，不用去用户空间走一圈。 动静分离，静态比如html css js直接读，动态内容才需要应用程序处理。所以性能好。
+
+### 4.命令
+
+查看安装版本: nginx -v
+
+查看编译时的参数: nginx -V
+
+查看安装的配置文件和目录: rpm -ql nginx
+
+#### 4.1 日志切割文件
+
+/etc/logrotate.d/nginx 查看
+
+配置成daily就可以每天输出一个日志，使得单个日志文件没有那么庞大
+
+ls /var/log/nginx/*.log 文件的位置
+
+#### 4.2 主配置文件
+
+核心配置文件： /etc/nginx/nginx.conf
+
+默认http服务器配置文件： /etc/nginx/conf.d/default.conf
+
+主配置文件中有 include /etc/nginx/conf.d/*.conf,可以避免主文件太大，不同的模块或者需求可以配单独的conf，会被include进来
+
+一些别的配置文件：
+
+转换编码的文件（因为nginx作者是俄国人）：/etc/nginx/koi-utf koi-win win-utf
+
+扩展名文件：/etc/nginx/mime.types
+
+#### 4.3 守护进程管理
+
+用户配置系统守护进程管理器管理方式
+
+```
+systemctl start nginx.service
+systemctl stop nginx.service
+systemctl restart nginx.service
+systemctl reload nginx.service
+
+//（相当于centos6的 service start nginx）
+```
+
+#### 4.4 nginx目录
+
+1. nginx安装的模块，最基本的共享库和内核模块
+   
+    /etc/nginx/modules
+
+2. 缓存目录
+
+    /var/cache/nginx
+
+3. 日志
+
+    /var/log/nginx
+
+4. 可执行命令
+
+    /usr/sbin/nginx
+
+    /usr/sbin/nginx-debug
+
+### 5 编译参数
+
+nginx -V 可以查看所有的编译参数
+
+主要是一些安装目录 可执行文件位置 安装模块的位置 日志位置等等
+
+
+
+
