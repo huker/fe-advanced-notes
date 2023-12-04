@@ -1,76 +1,54 @@
-## 前端成长记录 / 经验总结
-> keep moving！具体内容看对应文件夹中的总结
+## 前端成长记录 / 总结
+
+> keep moving！
 
 - 1 JS深入
 - 2 NodeJS
 - 3 Webpack
 - 4 React
 - 5 影像相关（cornerstone）
-- 6 Vue
-- 7 算法（js向
+- 7 算法
+- 8 生态、基础
+
+完整的文章类分享在简书：https://www.jianshu.com/u/3b6a2a78db9b
 
 ### 1 JS深入
-1. **高阶函数相关**
 
-   记录文档：1.js深入内容 -> callback -> 总结.md
-
-2. **promise用法、手写**
-
-   记录文档：1.js深入内容 -> promise -> 总结.md
-
-3. **es6** 
-
-   记录文档：1.js深入内容 -> es6 -> 总结.md
-
-4. **eventLoop（浏览器、Node事件环）**
-
-   记录文档：1.js深入内容 -> eventLoop -> 总结.md
+1. **高阶函数相关**  
+   路径：1.js深入内容 -> callback
+2. **promise**  
+   路径：1.js深入内容 -> promise
+3. **es6**  
+   路径：1.js深入内容 -> es6
+4. **eventLoop（浏览器、Node事件环）**  
+   路径：1.js深入内容 -> eventLoop
 
 ### 2 NodeJS
 
-1. **commonjs原理和实现**
+1. **commonjs原理和实现**   
+   路径：2.node -> 1.commonjs原理和实现 -> 总结.md
+2. **buffer**   
+   路径：2.node -> 2.buffer -> 总结.md
+3. **stream**  
+   路径：2.node -> 2.stream -> 总结.md
+4. **koa**  
+   路径：2.node -> 6.koa -> 总结.md
 
-   记录文档：2.node -> 1.commonjs原理和实现 -> 总结.md
-
-2. **buffer**
-
-   记录文档：2.node -> 2.buffer -> 总结.md
-
-4. **stream**
-
-   记录文档：2.node -> 2.stream -> 总结.md
-
-6. **koa**
-
-   记录文档：2.node -> 6.koa -> 总结.md
-
- ### 3 Webpack
+### 3 Webpack
 
 关于webpack之前开过repository：
 
 https://github.com/huker/webpack-demo
 
-之前写的webpack4总结指南：
+webpack4总结：
 
 http://huker.github.io/2019/03/01/webpack4-guide/
-  
+
 ### 5 影像 cornerstone
-工作原因这两年间歇性在做影像相关的内容，把一些点做了一下记录
 
-1.conerstone-tools synchronize
-https://www.jianshu.com/p/944b1daee8cb
+工作原因歇性在做web影像渲染相关的内容，分享博客记录在简书（见顶部）
 
-2.loadAndCacheImage改造 - 预加载影像
-https://www.jianshu.com/p/c6c82a2e8638
+### 8 基础、前端生态
 
-3.cornerstone-tools 空间定位功能
-https://www.jianshu.com/p/7da543becc2f
-
-4.metadataProvider问题
-https://www.jianshu.com/p/343213b8bfc4
-
-5.multi-dicom处理
-https://www.jianshu.com/p/a4f2d82e1bc4
-
-6.CPR曲面重建web实现
-https://www.jianshu.com/p/aa96cf79930b
+1. **nginx**  
+   路径：8.basic -> nginx
