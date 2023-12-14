@@ -90,3 +90,13 @@ https://blog.csdn.net/weixin_44657888/article/details/130626816
 https://blog.csdn.net/m0_61066945/article/details/129939387
 
 http://www.manongjc.com/detail/57-epwaimoqlmqrzjh.html
+
+### 一些指令的用法
+
+查看指令历史：history
+
+执行上一个指令：!!
+
+也可以用history列表前面的序号：!28
+
+

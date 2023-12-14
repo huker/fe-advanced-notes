@@ -202,6 +202,8 @@ server_name default_server
 
 访问文件但显示时去除所有注释：cat default.conf | grep -v "#"
 
+nginx.pid找不到的方法： 1.kill 当前nginx进程 2.restart nginx.service
+
 ### 搜索时看到的一些文章
 
 nginx性能优化：https://cloud.tencent.com/developer/article/2256775
