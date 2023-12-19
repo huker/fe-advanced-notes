@@ -99,4 +99,5 @@ http://www.manongjc.com/detail/57-epwaimoqlmqrzjh.html
 
 也可以用history列表前面的序号：!28
 
+查看日志文件： tail -f /var/log/nginx/access.log
 
