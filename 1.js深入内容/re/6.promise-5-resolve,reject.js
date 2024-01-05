@@ -1,11 +1,6 @@
-import fs from "fs";
-import { dirname, resolve } from "path"
-import { fileURLToPath } from "url"
 
-const _url = fileURLToPath(import.meta.url);
-const __dirname = dirname(_url);
-
-// 实现链式调用
+// Promise.resolve
+// Promise.reject
 
 const PENDING = 'pending';
 const FULLFILLED = 'fullfilled';
@@ -20,14 +15,29 @@ class CustomPromise {
     onFulfilledTask = [];
     onRejectedTask = [];
 
+    static resolve(v) {
+        return new CustomPromise((resolve) => {
+            resolve(v)
+        })
+    }
+
+    static reject(v) {
+        return new CustomPromise((resolve, reject) => {
+            reject(v)
+        })
+    }
+
+
     constructor(executor) {
         const resolve = (data) => {
+            if (data instanceof CustomPromise) {
+                return data.then(resolve, reject) // 递归解析
+            }
             if (this.state !== PENDING) {
                 return
             }
-            this.state = FULLFILLED;
             this.value = data;
-            // 发布
+            this.state = FULLFILLED;
             this.onFulfilledTask.forEach((task) => {
                 task()
             })
@@ -38,7 +48,6 @@ class CustomPromise {
             }
             this.state = REJECTED;
             this.reason = data;
-            // 发布
             this.onRejectedTask.forEach((task) => {
                 task()
             })
@@ -51,17 +60,13 @@ class CustomPromise {
     }
 
     then(onFulfilled, onRejected) {
-        // 收集订阅
-        // 切片的写法 更容易扩展 可以做一些统一处理 比如错误处理什么的
+        onFulfilled = (typeof onFulfilled === "function") ? onFulfilled : (v) => { return v };
+        onRejected = (typeof onRejected === "function") ? onRejected : (v) => { throw v };
         const nextPromise = new CustomPromise((resolve, reject) => {
             if (this.state === FULLFILLED) {
-                // 因为内部需要nextPromise 但是js的执行顺序下 nextPromise是取不到的 
-                // process.nextTick是把它变成了微任务 在主线结束后 再执行
                 process.nextTick(() => {
                     try {
                         const x = onFulfilled(this.value);
-                        // resolve(x);
-                        // 通过x判断 走成功还是走失败
                         resolvePromise(nextPromise, x, resolve, reject)
                     } catch (e) {
                         reject(e)
@@ -111,19 +116,19 @@ function resolvePromise(nextPromise, x, resolve, reject) {
         reject('type error')
     }
     try {
-        // 照理来说是只有成功或者失败 不可逆 所以不会出现又成功又失败，但是万一有不合规的自定义的promise 就有可能 要避免
         let called = false;
         if (x && x.then && (typeof x === 'object')) {
             let then = x.then
-            then.call(x, (v) => {
-                if (called) return
-                called = true;
-                resolve(v)
-            }, (v) => {
-                if (called) return
-                called = true;
-                reject(v)
-            })
+            then.call(x,
+                (v) => {
+                    if (called) return
+                    called = true;
+                    resolvePromise(nextPromise, v, resolve, reject);
+                }, (v) => {
+                    if (called) return
+                    called = true;
+                    reject(v)
+                })
         } else {
             if (called) return
             called = true;
@@ -136,38 +141,36 @@ function resolvePromise(nextPromise, x, resolve, reject) {
     }
 }
 
-// 可以返回一个promise 也可以返回一个不报错的任意值 这个值会作为下一次then的参数
-// 走到失败的情况：1.throw错误  2.返回的是一个失败的promise
-// 上一个then失败，流入失败的时候如果什么也没做，也会以undefined的值流入下一个then的成功
 
-const p1 = new CustomPromise((resolve, reject) => {
-    resolve('ok')
-}).then((v) => {
-    console.log('2', v)
-    return new CustomPromise((resolve2) => { resolve2('2234') })
-}).then((v) => {
-    return new Promise((resolve3) => {
-        setTimeout(() => {
-            resolve3('set!!!!!')
-        }, 1000)
-    })
-}).then(v => {
-    console.log('last', v)
+// CustomPromise.resolve(1).then((data) => {
+//     console.log(data)
+// })
+
+let p1 = new CustomPromise((resolve, reject) => {
+    setTimeout(() => {
+        resolve(123)
+    }, 1000)
 })
 
-// function readFile(path) {
-//     return new CustomPromise((resolve, reject) => {
-//         fs.readFile(path, 'utf-8', function (err, data) {
-//             resolve(data);
-//         })
-//     })
-// }
+CustomPromise.resolve(p1).then((data) => {
+    console.log('aa', data)
+})
 
-// readFile(resolve(__dirname, 'name.txt')).then((v) => {
-//     console.log('v1', v)
-//     return readFile(resolve(__dirname, 'age.txt'))
-// }).then((v) => {
-//     console.log('v2', v)
-// }, (e) => {
-//     console.log('err', e)
+CustomPromise.reject(p1).then((data) => {
+    console.log('aa', data)
+}, (e) => {
+    console.log('err', e)
+})
+
+
+// Promise.reject会直接走到失败 不会再解析reject中的promise了
+// let p2 = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//         resolve(123)
+//     }, 1000)
+// })
+// 
+// Promise.reject(p2).then(()=>{
+// },(e)=>{
+//     console.log('error',e)
 // })
