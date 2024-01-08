@@ -15,24 +15,16 @@
 ### 1 JS基础
 
 1. **高阶函数相关**  
-   路径：1.js深入内容 -> callback
 2. **promise**  
-   路径：1.js深入内容 -> promise
 3. **es6**  
-   路径：1.js深入内容 -> es6
 4. **eventLoop（浏览器、Node事件环）**  
-   路径：1.js深入内容 -> eventLoop
 
 ### 2 Node
 
-1. **commonjs原理和实现**   
-   路径：2.node -> 1.commonjs原理和实现 -> 总结.md
+1. **commonjs**   
 2. **buffer**   
-   路径：2.node -> 2.buffer -> 总结.md
 3. **stream**  
-   路径：2.node -> 2.stream -> 总结.md
 4. **koa**  
-   路径：2.node -> 6.koa -> 总结.md
 
 ### 3 Webpack
 
@@ -49,4 +41,3 @@ http://huker.github.io/2019/03/01/webpack4-guide/
 ### 8 基础、前端生态
 
 1. **nginx**  
-   路径：8.basic -> nginx
